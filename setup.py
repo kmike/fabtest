@@ -31,5 +31,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Topic :: Software Development :: Testing',
     ),
 )
