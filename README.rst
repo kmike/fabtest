@@ -21,13 +21,11 @@ VMs
 In order to run tests you'll need `VirtualBox`_ 4.x and an OS image.
 Image should have ssh server installed.
 
-.. note::
+Example VMs:
 
-    Example VMs:
-
-    * `Lenny.ova (312M) <http://dl.dropbox.com/u/21197464/Lenny.ova>`_
-    * `Squeeze.ova (436M) <http://dl.dropbox.com/u/21197464/Squeeze.ova>`_
-    * `Ubuntu-10.10.ova (277M) <http://dl.dropbox.com/u/21197464/Ubuntu-10.10.ova>`_
+* `Lenny.ova (312M) <http://dl.dropbox.com/u/21197464/Lenny.ova>`_
+* `Squeeze.ova (436M) <http://dl.dropbox.com/u/21197464/Squeeze.ova>`_
+* `Ubuntu-10.10.ova (277M) <http://dl.dropbox.com/u/21197464/Ubuntu-10.10.ova>`_
 
 After you get the image, make sure it is not running and execute the
 ``fabtest-preparevm`` script (pass your VM name or uid to it)::
