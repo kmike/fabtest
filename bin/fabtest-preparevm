@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+"""
+Prepares VirtualBox image: takes initial snapshot for rollbacks
+and configures port forwarding.
+"""
+
+import sys
+from time import sleep
+from fab_deploy_tests.vbox import VirtualBox
+
+def prepare_vbox(name):
+    """ Basic VM preparation so tests can be run """
+    box = VirtualBox(name)
+    box.modifyvm('--natpf1', 'guestssh,tcp,,2222,,22')
+    box.modifyvm('--natpf1', 'http,tcp,,8888,,80')
+
+    if box.snapshot_exists('fabtest-initial'):
+        print "Initial snapshot exists."
+        return
+
+    box.start()
+    print 'Vaiting 100 seconds for OS to boot...'
+    print "Please don't touch the VM."
+    for i in range(1,11):
+        sleep(10)
+        print '%ds remains' % (100-i*10)
+
+    box.snapshot('take', 'fabtest-initial')
+    box.stop()
+
+def help():
+    print "\nPrepares VirtualBox VM for fabtest tests: "
+    print "configures port forwarding (127.0.0.1:2222 to guest 22 port,"
+    print "127.0.0.1:8888 to guest 80 port) and takes 'fabtest-initial' "
+    print "snapshot used for test rollbacks (it is taken from booted"
+    print "machine in order to speedup tests)."
+    print "\nUsage:"
+    print "\n   fabtest-preparevm <VM_NAME or uid>\n"
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        help()
+    else:
+        prepare_vbox(sys.argv[1])
+

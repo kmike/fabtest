@@ -1,0 +1,7 @@
+include LICENSE
+include README.rst
+recursive-include docs *.rst
+recursive-exclude docs/_build *
+recursive-include fabtest *.py
+recursive-include example *.py
+include bin/fabtest-preparevm
