@@ -3,7 +3,7 @@ Fabtest
 =======
 
 Fabtest is a set of utilities and base TestCases that aid testing Fabric
-scripts against VirtualBox VMs.
+scripts against VirtualBox VMs. License is MIT.
 
 VM is rolled back to initial state before each test so tests can do anything
 with target system; Fabric commands can be run from Python.
