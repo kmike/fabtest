@@ -13,10 +13,10 @@ class VirtualBox(object):
         """
         return partial(self, name)
 
-    def __call__(self, command, *args):
+    def __call__(self, command, *args, **kwargs):
         params = [self.vbox_command, command, self.name] + list(args)
         print '$ ' + ' '.join(params)
-        return subprocess.call(params)
+        return subprocess.call(params, **kwargs)
 
     def start(self):
         # headless variant leads to invalid snapshots for some reason
@@ -24,9 +24,10 @@ class VirtualBox(object):
         # self.startvm('--type', 'headless')
         self.startvm()
 
-    def stop(self):
-        self.controlvm('poweroff')
+    def stop(self, ignore_errors=True):
+        stderr = subprocess.PIPE if ignore_errors else None
+        self.controlvm('poweroff', stderr=stderr)
 
     def snapshot_exists(self, name):
-        res = self.snapshot('showvminfo', name)
+        res = self.snapshot('showvminfo', name, stdout=subprocess.PIPE)
         return res == 0
