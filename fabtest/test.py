@@ -8,6 +8,10 @@ class VirtualBoxTest(unittest.TestCase):
     vbox_command = 'VBoxManage'
     snapshot = 'fabtest-initial'
 
+    # set this to False if snapshots are taken during tests
+    # or if you want to be able to login to VM in a separate shell
+    headless = True
+
     def setUp(self):
         self.box = VirtualBox(self.vm_name, self.vbox_command)
         self.activate_snapshot(self.snapshot)
@@ -19,7 +23,7 @@ class VirtualBoxTest(unittest.TestCase):
         assert self.box.snapshot_exists(name), 'Snapshot "%s" does not exist' % name
         self.box.stop()
         self.box.snapshot('restore', name)
-        self.box.start()
+        self.box.start(self.headless)
 
 
 class FabTest(VirtualBoxTest):

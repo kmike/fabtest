@@ -18,11 +18,13 @@ class VirtualBox(object):
         print '$ ' + ' '.join(params)
         return subprocess.call(params, **kwargs)
 
-    def start(self):
+    def start(self, headless=False):
         # headless variant leads to invalid snapshots for some reason
         # (bug in virtualbox?)
-        # self.startvm('--type', 'headless')
-        self.startvm()
+        if headless:
+            self.startvm('--type', 'headless')
+        else:
+            self.startvm()
 
     def stop(self, ignore_errors=True):
         stderr = subprocess.PIPE if ignore_errors else None
