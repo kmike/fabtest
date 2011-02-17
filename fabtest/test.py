@@ -16,6 +16,7 @@ class VirtualBoxTest(unittest.TestCase):
         self.box.stop()
 
     def activate_snapshot(self, name):
+        assert self.box.snapshot_exists(name), 'Snapshot "%s" does not exist' % name
         self.box.stop()
         self.box.snapshot('restore', name)
         self.box.start()
