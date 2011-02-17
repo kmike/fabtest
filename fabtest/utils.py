@@ -8,10 +8,14 @@ def fab(command, *args, **kwargs):
     # clean the connection cache
     state.connections = HostConnectionCache()
 
+    # collect results
+    results = []
+
     # partially implement the logic from fabric.main.main
     state.env.command = command.__name__
     state.env.all_hosts = hosts = get_hosts(command, None, None)
     for host in hosts:
         interpret_host_string(host)
-        command(*args, **kwargs)
-
+        res = command(*args, **kwargs)
+        results.append(res)
+    return results
