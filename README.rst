@@ -48,12 +48,12 @@ fabric commands execution::
     from fabric.api import run
     from fabtest import FabTest, fab
 
-    class MyTestCase(FabTest):
+    def whoami():
+        return run('whoami')
 
+    class MyTestCase(FabTest):
         def test_root_login(self):
-            def fabric_command():
-                output = run('whoami')
-                self.assertEqual(output, 'root')
-            fab(fabric_command)
+            output = fab(whoami)
+            self.assertEqual(output[0], 'root')
 
 Look at source code (and example/runtests.py) for more.
