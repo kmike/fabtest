@@ -6,10 +6,11 @@ from fabric.state import _AttributeDict
 class VirtualBoxTest(unittest.TestCase):
     vm_name = 'Squeeze'
     vbox_command = 'VBoxManage'
+    snapshot = 'fabtest-initial'
 
     def setUp(self):
         self.box = VirtualBox(self.vm_name, self.vbox_command)
-        self.activate_snapshot('fabtest-initial')
+        self.activate_snapshot(self.snapshot)
 
     def tearDown(self):
         self.box.stop()
