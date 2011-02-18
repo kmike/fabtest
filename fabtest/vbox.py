@@ -2,15 +2,26 @@ import subprocess
 from functools import partial
 
 class VirtualBox(object):
+    """
+    Simplest VirtualBox connection class.
+    Its attributes are converted to a functions calling
+    VBoxManage shell command, e.g. this::
+
+        box = VirtualBox('MyVM')
+        box.startvm('--type', 'headless')
+
+    will execute this::
+
+        VBoxManage startvm MyVM --type headless
+
+    Please read VBoxManage reference manual for more info.
+    """
+
     def __init__(self, name, vbox_command='VBoxManage'):
         self.name = name
         self.vbox_command = vbox_command
 
     def __getattr__(self, name):
-        """
-        Attributes are converted to a functions calling
-        VBoxManage shell command.
-        """
         return partial(self, name)
 
     def __call__(self, command, *args, **kwargs):
@@ -18,6 +29,7 @@ class VirtualBox(object):
         print '$ ' + ' '.join(params)
         return subprocess.call(params, **kwargs)
 
+    # some common wrappers
     def start(self, headless=False):
         # headless variant leads to invalid snapshots for some reason
         # (bug in virtualbox?)
