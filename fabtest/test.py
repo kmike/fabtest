@@ -1,7 +1,10 @@
 import unittest
+
+from fabric.api import env
+from fabric import state
+
 from fabtest.vbox import VirtualBox
-from fabric.api import env, run
-from fabric.state import _AttributeDict
+from fabtest.utils import close_fabric_connections
 
 class VirtualBoxTest(unittest.TestCase):
     vm_name = 'Squeeze' # name or uuid of VirtualBox VM
@@ -35,10 +38,12 @@ class FabTest(VirtualBoxTest):
 
     def setUp(self):
         super(FabTest, self).setUp()
-        self.previous_env = _AttributeDict(env)
+        close_fabric_connections()
+        self.previous_env = state._AttributeDict(env)
         self.setup_env()
 
     def tearDown(self):
+        close_fabric_connections()
         env.update(self.previous_env)
         super(FabTest, self).tearDown()
 

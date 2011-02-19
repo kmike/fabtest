@@ -1,15 +1,12 @@
 from fabric import state
 from fabric.main import get_hosts
-from fabric.network import interpret_host_string, HostConnectionCache
+from fabric.network import interpret_host_string
 
 class FabricAbortException(Exception):
     pass
 
 def fab(command, *args, **kwargs):
     """ Runs fab command. Accepts callable. """
-
-    # clean the connection cache
-    state.connections = HostConnectionCache()
 
     # collect results
     results = []
@@ -28,4 +25,10 @@ def fab(command, *args, **kwargs):
         import traceback
         traceback.print_exc()
         raise FabricAbortException()
+
+def close_fabric_connections():
+    for key, connection in state.connections.items():
+        connection.close()
+        del state.connections[key]
+
 
