@@ -6,7 +6,7 @@ for cmd in ('egg_info', 'develop'):
     if cmd in sys.argv:
         from setuptools import setup
 
-version='0.0.5'
+version='0.0.6'
 
 setup(
     name='fabtest',
