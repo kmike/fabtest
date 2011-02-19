@@ -1,5 +1,6 @@
 import subprocess
 from functools import partial
+import urllib2
 
 class VirtualBox(object):
     """
@@ -45,3 +46,20 @@ class VirtualBox(object):
     def snapshot_exists(self, name):
         res = self.snapshot('showvminfo', name, stdout=subprocess.PIPE)
         return res == 0
+
+
+def vbox_urlopen(fullurl, data=None, vbox_http = '127.0.0.1:8888'):
+    """
+    Wrapper for performing requests to VM. The trick is to treat VM as a proxy.
+
+        vbox_urlopen('http://example.com')
+
+    removes the need to do this:
+
+        1. add '127.0.0.1 example.com' line to ``hosts`` file
+        2. call urllib2.urlopen('http://example.com:8888')
+        3. remove '127.0.0.1 example.com' from hosts
+    """
+    proxy_handler = urllib2.ProxyHandler({'http': vbox_http})
+    opener = urllib2.build_opener(proxy_handler)
+    return opener.open(fullurl, data)

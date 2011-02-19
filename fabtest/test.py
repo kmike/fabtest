@@ -47,4 +47,3 @@ class FabTest(VirtualBoxTest):
         env.password = self.password
         env.key_filename = self.key_filename
         env.disable_known_hosts = True
-
