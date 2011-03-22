@@ -6,7 +6,7 @@ and configures port forwarding.
 
 import sys
 from time import sleep
-from fab_deploy_tests.vbox import VirtualBox
+from fabtest.vbox import VirtualBox
 
 def prepare_vbox(name):
     """ Basic VM preparation so tests can be run """

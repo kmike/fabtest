@@ -1,5 +1,6 @@
 include LICENSE
 include README.rst
+include AUTHORS
 recursive-include docs *.rst
 recursive-exclude docs/_build *
 recursive-include fabtest *.py
