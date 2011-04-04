@@ -21,11 +21,16 @@ VMs
 In order to run tests you'll need `VirtualBox`_ 4.x and an OS image.
 Image should have ssh server installed.
 
-Example VMs:
+Example VMs (they can be imported to VirtualBox via File->Import Appliance):
 
 * `Lenny.ova (312M) <http://dl.dropbox.com/u/21197464/Lenny.ova>`_
 * `Squeeze.ova (436M) <http://dl.dropbox.com/u/21197464/Squeeze.ova>`_
 * `Ubuntu-10.10.ova (277M) <http://dl.dropbox.com/u/21197464/Ubuntu-10.10.ova>`_
+
+Due to bugs in VirtualBox it is better to convert imported .vmdk disk images
+to .vdi images, e.g.::
+
+    VBoxManage clonehd Ubuntu-10.10-disk1.vmdk Ubuntu-10.10-disk.vdi --format VDI
 
 After you get the image, make sure it is not running and execute the
 ``fabtest-preparevm`` script (pass your VM name or uid to it)::
