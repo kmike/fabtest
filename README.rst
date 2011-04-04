@@ -32,6 +32,8 @@ to .vdi images, e.g.::
 
     VBoxManage clonehd Ubuntu-10.10-disk1.vmdk Ubuntu-10.10-disk.vdi --format VDI
 
+Then detach (and remove) vmdk disk from the VM and attach the vdi image.
+
 After you get the image, make sure it is not running and execute the
 ``fabtest-preparevm`` script (pass your VM name or uid to it)::
 
