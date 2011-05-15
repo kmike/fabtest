@@ -26,6 +26,7 @@ Example VMs (they can be imported to VirtualBox via File->Import Appliance):
 * `Lenny.ova (312M) <http://dl.dropbox.com/u/21197464/Lenny.ova>`_
 * `Squeeze.ova (436M) <http://dl.dropbox.com/u/21197464/Squeeze.ova>`_
 * `Ubuntu-10.10.ova (277M) <http://dl.dropbox.com/u/21197464/Ubuntu-10.10.ova>`_
+* `Ubuntu-10.04.ova (375M) <http://dl.dropbox.com/u/21197464/Ubuntu-10.04.ova>`_
 
 Due to bugs in VirtualBox it is better to convert imported .vmdk disk images
 to .vdi images, e.g.::
