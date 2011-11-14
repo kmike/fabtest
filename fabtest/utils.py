@@ -1,6 +1,5 @@
 from fabric import state
-from fabric.main import get_hosts
-from fabric.network import interpret_host_string
+from fabric.tasks import WrappedCallableTask
 
 class FabricAbortException(Exception):
     pass
@@ -13,7 +12,7 @@ def fab(command, *args, **kwargs):
 
     # partially implement the logic from fabric.main.main
     state.env.command = command.__name__
-    state.env.all_hosts = hosts = get_hosts(command, None, None)
+    state.env.all_hosts = hosts = WrappedCallableTask(command).get_hosts(*args)
 
     try: # convert fabric.abort() calls to real exceptions
         for host in hosts:
