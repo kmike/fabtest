@@ -64,6 +64,7 @@ class FabTest(VirtualBoxTest):
         env.password = self.password
         env.host_string = self.host
         env.key_filename = self.key_filename
+        env.timeout = 1 # local virtualbox connections should be fast
         env.disable_known_hosts = True
 
     def take_test_snapshot(self, name, reconnect=True):
