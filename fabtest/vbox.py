@@ -69,7 +69,10 @@ class VirtualBox(object):
 
 def vbox_urlopen(fullurl, data=None, vbox_http = '127.0.0.1:8888'):
     """
-    Wrapper for performing requests to VM. The trick is to treat VM as a proxy.
+    Wrapper for performing http requests to VM. The trick is to
+    treat VM as a proxy.
+
+    This::
 
         vbox_urlopen('http://example.com')
 

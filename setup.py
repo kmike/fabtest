@@ -6,7 +6,7 @@ for cmd in ('egg_info', 'develop'):
     if cmd in sys.argv:
         from setuptools import setup
 
-version='0.0.8'
+version='0.1'
 
 setup(
     name='fabtest',
@@ -21,7 +21,7 @@ setup(
     license = 'MIT license',
     description = """ Test Fabric scripts on VirtualBox VMs """,
 
-    long_description = open('README.rst').read(),
+    long_description = open('README.rst').read() + open('CHANGES.rst').read(),
     requires = ['Fabric (>= 1.4.0)'],
 
     classifiers=(
@@ -31,7 +31,6 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.5',
         'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Topic :: Software Development :: Libraries :: Python Modules',

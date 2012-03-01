@@ -1,0 +1,21 @@
+
+CHANGES
+=======
+
+0.1 (2012-03-01)
+----------------
+
+* Fabric >= 1.4 is supported (and required);
+* more reliable virtualbox snapshot handling;
+* ``fab`` function now wraps fabric's ``execute`` and
+  returns single value, not a list of values.
+
+0.0.8 (2011-03-22)
+------------------
+
+* Many tweaks & bug fixes.
+
+0.0.1 (2011-02-16)
+------------------
+
+Initial experimental release (extracted from django-fab-deploy).
