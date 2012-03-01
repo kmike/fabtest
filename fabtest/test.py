@@ -19,18 +19,28 @@ class VirtualBoxTest(unittest.TestCase):
     headless = True
 
     def setUp(self):
+        self._snapshots = []
         self.box = VirtualBox(self.vm_name, self.vbox_command)
         self.activate_snapshot(self.snapshot)
 
     def tearDown(self):
         if not self.keep_box:
             self.box.stop()
+        for name in self._snapshots:
+            self.box.snapshot('delete', name)
 
     def activate_snapshot(self, name):
         assert self.box.snapshot_exists(name), 'Snapshot "%s" does not exist' % name
         self.box.stop()
         self.box.snapshot('restore', name)
         self.box.start(self.headless)
+
+    def take_snapshot(self, name):
+        """
+        Creates temporary snapshot that will be deleted after test.
+        """
+        self._snapshots.append(name)
+        self.box.snapshot_take(name)
 
 
 class FabTest(VirtualBoxTest):
@@ -55,3 +65,11 @@ class FabTest(VirtualBoxTest):
         env.host_string = self.host
         env.key_filename = self.key_filename
         env.disable_known_hosts = True
+
+    def activate_snapshot(self, name):
+        super(FabTest, self).activate_snapshot(name)
+        force_ssh_reconnect()
+
+    def take_snapshot(self, name):
+        super(FabTest, self).take_snapshot(name)
+        force_ssh_reconnect()

@@ -15,6 +15,9 @@ class VirtualBox(object):
 
         VBoxManage startvm MyVM --type headless
 
+    Positional args are used to build VBoxManage command,
+    kwargs are passed to subprocess.call.
+
     Please read VBoxManage reference manual for more info.
     """
 
@@ -44,8 +47,24 @@ class VirtualBox(object):
         self.controlvm('poweroff', stderr=stderr)
 
     def snapshot_exists(self, name):
-        res = self.snapshot('showvminfo', name, stdout=subprocess.PIPE)
+        res = self.snapshot('showvminfo', name, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         return res == 0
+
+    def snapshot_take(self, name, *args, **kwargs):
+        """
+        Takes snapshot. Without pause/resume VirtualBox fails with
+        VERR_SSM_LIVE_GURU_MEDITATION.
+        """
+        self.controlvm('pause')
+        result = self.snapshot('take', name, *args, **kwargs)
+        self.controlvm('resume')
+        return result
+
+    def snapshot_restore(self, name):
+        self.stop()
+        self.snapshot('restore', name)
+        self.start()
+
 
 
 def vbox_urlopen(fullurl, data=None, vbox_http = '127.0.0.1:8888'):
