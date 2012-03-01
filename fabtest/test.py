@@ -2,9 +2,11 @@ import unittest
 
 from fabric.api import env
 from fabric import state
+from fabric.state import connections
+from fabtest.utils import force_ssh_reconnect
 
 from fabtest.vbox import VirtualBox
-from fabtest.utils import close_fabric_connections
+from fabric.network import disconnect_all
 
 class VirtualBoxTest(unittest.TestCase):
     vm_name = 'Squeeze' # name or uuid of VirtualBox VM
@@ -37,18 +39,19 @@ class FabTest(VirtualBoxTest):
     key_filename = None
 
     def setUp(self):
-        super(FabTest, self).setUp()
-        close_fabric_connections()
-        self.previous_env = state._AttributeDict(env)
         self.setup_env()
+        disconnect_all()
+        self.previous_env = state._AttributeDict(env)
+        super(FabTest, self).setUp()
 
     def tearDown(self):
-        close_fabric_connections()
+        disconnect_all()
         env.update(self.previous_env)
         super(FabTest, self).tearDown()
 
     def setup_env(self):
         env.hosts = [self.host]
         env.password = self.password
+        env.host_string = self.host
         env.key_filename = self.key_filename
         env.disable_known_hosts = True
