@@ -8,9 +8,6 @@ from fabtest import FabTest, fab
 def whoami():
     return run('whoami')
 
-def mkfile():
-    return run('touch ~/file-exists')
-
 class MyTestCase(FabTest):
     def test_root_login(self):
         output = fab(whoami)
