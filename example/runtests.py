@@ -10,8 +10,7 @@ def whoami():
 
 class MyTestCase(FabTest):
     def test_root_login(self):
-        output = fab(whoami)
-        self.assertEqual(output[0], 'root')
+        self.assertEqual(fab(whoami), 'root')
 
     def test_snapshots(self):
 
@@ -22,18 +21,18 @@ class MyTestCase(FabTest):
         def file_exists():
             return exists(test_file)
 
-        self.assertFalse(fab(file_exists)[0])
+        self.assertFalse(fab(file_exists))
         fab(mkfile)
-        self.assertTrue(fab(file_exists)[0])
+        self.assertTrue(fab(file_exists))
 
         self.take_test_snapshot('test-snapshot')
-        self.assertTrue(fab(file_exists)[0])
+        self.assertTrue(fab(file_exists))
 
         self.activate_test_snapshot(self.snapshot)
-        self.assertFalse(fab(file_exists)[0])
+        self.assertFalse(fab(file_exists))
 
         self.activate_test_snapshot('test-snapshot')
-        self.assertTrue(fab(file_exists)[0])
+        self.assertTrue(fab(file_exists))
 
 
 def help():

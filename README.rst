@@ -62,6 +62,6 @@ fabric commands execution::
     class MyTestCase(FabTest):
         def test_root_login(self):
             output = fab(whoami)
-            self.assertEqual(output[0], 'root')
+            self.assertEqual(output, 'root')
 
 Look at source code (and example/runtests.py) for more.
