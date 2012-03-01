@@ -2,11 +2,10 @@ import unittest
 
 from fabric.api import env
 from fabric import state
-from fabric.state import connections
-from fabtest.utils import force_ssh_reconnect
+from fabric.network import disconnect_all
 
 from fabtest.vbox import VirtualBox
-from fabric.network import disconnect_all
+from fabtest.utils import force_ssh_reconnect
 
 class VirtualBoxTest(unittest.TestCase):
     vm_name = 'Squeeze' # name or uuid of VirtualBox VM
@@ -24,8 +23,9 @@ class VirtualBoxTest(unittest.TestCase):
         self.activate_snapshot(self.snapshot)
 
     def tearDown(self):
-        if not self.keep_box:
-            self.box.stop()
+        if self.keep_box:
+            return
+        self.box.stop()
         for name in self._snapshots:
             self.box.snapshot('delete', name)
 
@@ -35,7 +35,7 @@ class VirtualBoxTest(unittest.TestCase):
         self.box.snapshot('restore', name)
         self.box.start(self.headless)
 
-    def take_snapshot(self, name):
+    def take_test_snapshot(self, name):
         """
         Creates temporary snapshot that will be deleted after test.
         """
@@ -66,10 +66,15 @@ class FabTest(VirtualBoxTest):
         env.key_filename = self.key_filename
         env.disable_known_hosts = True
 
-    def activate_snapshot(self, name):
-        super(FabTest, self).activate_snapshot(name)
-        force_ssh_reconnect()
+    def take_test_snapshot(self, name, reconnect=True):
+        super(FabTest, self).take_test_snapshot(name)
+        if reconnect:
+            force_ssh_reconnect()
 
-    def take_snapshot(self, name):
-        super(FabTest, self).take_snapshot(name)
-        force_ssh_reconnect()
+    def activate_test_snapshot(self, name, reconnect=True):
+        """
+        Activates test snapshot.
+        """
+        self.activate_snapshot(name)
+        if reconnect:
+            force_ssh_reconnect()

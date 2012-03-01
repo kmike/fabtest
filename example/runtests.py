@@ -26,13 +26,13 @@ class MyTestCase(FabTest):
         fab(mkfile)
         self.assertTrue(fab(file_exists)[0])
 
-        self.take_snapshot('test-snapshot')
+        self.take_test_snapshot('test-snapshot')
         self.assertTrue(fab(file_exists)[0])
 
-        self.activate_snapshot(self.snapshot)
+        self.activate_test_snapshot(self.snapshot)
         self.assertFalse(fab(file_exists)[0])
 
-        self.activate_snapshot('test-snapshot')
+        self.activate_test_snapshot('test-snapshot')
         self.assertTrue(fab(file_exists)[0])
 
 
