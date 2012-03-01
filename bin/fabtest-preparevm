@@ -8,7 +8,7 @@ import sys
 from time import sleep
 from fabtest.vbox import VirtualBox
 
-def prepare_vbox(name):
+def prepare_vbox(name, wait=100):
     """ Basic VM preparation so tests can be run """
     box = VirtualBox(name)
     box.modifyvm('--natpf1', 'guestssh,tcp,,2222,,22')
@@ -19,13 +19,14 @@ def prepare_vbox(name):
         return
 
     box.start()
-    print 'Vaiting 100 seconds for OS to boot...'
+    print 'Vaiting %d seconds for OS to boot...' % wait
     print "Please don't touch the VM."
+    step = wait/10.
     for i in range(1,11):
-        sleep(10)
-        print '%ds remains' % (100-i*10)
+        sleep(step)
+        print '%ds remains' % (wait-i*step)
 
-    box.snapshot('take', 'fabtest-initial')
+    box.snapshot_take('fabtest-initial')
     box.stop()
 
 def help():
