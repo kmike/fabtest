@@ -2,6 +2,11 @@
 CHANGES
 =======
 
+0.1.1 (2012-03-02)
+------------------
+
+* Better exception handling (the original traceback is preserved).
+
 0.1 (2012-03-01)
 ----------------
 

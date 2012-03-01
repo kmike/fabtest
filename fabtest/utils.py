@@ -15,7 +15,8 @@ def catch_aborts(func):
         except SystemExit, e:
             import traceback
             traceback.print_exc()
-            raise FabricAbortException()
+            tb = traceback.format_exc()
+            raise FabricAbortException(tb)
     return inner
 
 execute_safe = catch_aborts(execute)
