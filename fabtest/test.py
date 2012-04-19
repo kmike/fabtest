@@ -1,4 +1,6 @@
 import unittest
+import time
+import platform
 
 from fabric.api import env
 from fabric import state
@@ -30,6 +32,13 @@ class VirtualBoxTest(unittest.TestCase):
             self.box.snapshot('delete', name)
 
     def activate_snapshot(self, name):
+        if platform.system()=='Windows':
+            RETRIES_CNT = 5
+            for i in xrange(RETRIES_CNT):
+                if self.box.snapshot_exists(name):
+           	        break
+                else:
+                    time.sleep(1)
         assert self.box.snapshot_exists(name), 'Snapshot "%s" does not exist' % name
         self.box.stop()
         self.box.snapshot('restore', name)
