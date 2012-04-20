@@ -6,7 +6,7 @@ from distutils.core import setup
 #    if cmd in sys.argv:
 #        from setuptools import setup
 #
-version='0.1.3'
+version='0.1.4'
 
 setup(
     name='fabtest',
@@ -17,7 +17,6 @@ setup(
     packages=['fabtest'],
     scripts = ['bin/fabtest-preparevm'],
     url='https://bitbucket.org/kmike/fabtest/',
-    download_url = 'https://bitbucket.org/kmike/fabtest/get/tip.zip',
     license = 'MIT license',
     description = """ Test Fabric scripts on VirtualBox VMs """,
 

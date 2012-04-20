@@ -2,6 +2,11 @@
 CHANGES
 =======
 
+0.1.4 (2012-04-19)
+------------------
+
+* Workaround for a VirtualBox bug under Windows.
+
 0.1.3 (2012-04-14)
 ------------------
 
