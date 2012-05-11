@@ -6,7 +6,7 @@ from distutils.core import setup
 #    if cmd in sys.argv:
 #        from setuptools import setup
 #
-version='0.1.4'
+version='0.1.5'
 
 setup(
     name='fabtest',
